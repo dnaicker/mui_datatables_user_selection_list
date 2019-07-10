@@ -1,10 +1,10 @@
 import React from 'react';
-import MUIDataTable from './components/mui_datatable'
+import UsersTable from './components/users_table'
 
 function App() {
   return (
-    <div className="App">
-      <MUIDataTable />  
+    <div>
+      <UsersTable />  
     </div>
   );
 }
