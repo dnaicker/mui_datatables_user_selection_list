@@ -1,10 +1,10 @@
 import React from 'react';
-import UsersTable from './components/users_table'
+import UsersSelectionList from './components/users_selection_list'
 
 function App() {
   return (
     <div>
-      <UsersTable />  
+      <UsersSelectionList />  
     </div>
   );
 }
