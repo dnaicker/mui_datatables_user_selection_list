@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import Card from '@material-ui/core/Card';
+import TextField from '@material-ui/core/TextField';
 import CardHeader from '@material-ui/core/CardHeader';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -29,47 +30,57 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-//removes a value from array a where array b value 
+//copies value from array b to array a if it is not in array a
 function not(a, b) {
   return a.filter(value => b.indexOf(value) === -1);
 }
 
-//filter removes value and returns array without that one value, why is this named intersection
+//copies value from array b to array a 
 function intersection(a, b) {
   return a.filter(value => b.indexOf(value) !== -1);
 }
 
-//swaps b and a for not?
+//takes all of a's values and the values not found in b and returns a 2d array
 function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
 export default function TransferList() {
+  const groupname = '';
   const classes = useStyles();
   const [checked, setChecked] = React.useState([]);
-  //-------
+
+  //------- struct: sets the left elements to 
   const [left, setLeft] = React.useState([0, 1, 2, 3]);
+  //------- struct: sets the right elements to
   const [right, setRight] = React.useState([4, 5, 6, 7]);
-  //-------
+
+  //------- takes the values above and instantiates them to leftChecked/rightChecked
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
-  //-------
+
+  //------- event: sets checked item to new list?
   const handleToggle = value => () => {
+    //------- takes the index of the value in checked array
     const currentIndex = checked.indexOf(value);
+    //------- copies checked object into an array
     const newChecked = [...checked];
 
-    //-------
+    //------- if its not at the end of the array, then add the item inbetween
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
       newChecked.splice(currentIndex, 1);
     }
 
+
     setChecked(newChecked);
   };
 
+  //------- tally number selected
   const numberOfChecked = items => intersection(checked, items).length;
 
+  //------- select all
   const handleToggleAll = items => () => {
     if (numberOfChecked(items) === items.length) {
       setChecked(not(checked, items));
@@ -78,19 +89,21 @@ export default function TransferList() {
     }
   };
 
+  //------- move item right
   const handleCheckedRight = () => {
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
   };
 
+  //------- move item left
   const handleCheckedLeft = () => {
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
 
-  //Renders custom list of users
+  //------- renders left and right list of users
   const customList = (title, items) => (
     <Card>
       <CardHeader
@@ -131,11 +144,10 @@ export default function TransferList() {
     </Card>
   );
 
+  //------- assemble left and right user list 
   return (
     <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
-     
-      <Grid item>{customList('Company Users', left)}</Grid>
-     
+      <Grid item>{customList('Choices', left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -144,8 +156,9 @@ export default function TransferList() {
             className={classes.button}
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
+            aria-label="move selected right"
           >
-            Add &gt;
+            &gt;
           </Button>
           <Button
             variant="outlined"
@@ -153,13 +166,13 @@ export default function TransferList() {
             className={classes.button}
             onClick={handleCheckedLeft}
             disabled={rightChecked.length === 0}
+            aria-label="move selected left"
           >
-            Remove &lt;
+            &lt;
           </Button>
         </Grid>
       </Grid>
-     
-      <Grid item>{customList('Group Users', right)}</Grid>
+      <Grid item>{customList('Chosen', right)}</Grid>
     </Grid>
   );
 }

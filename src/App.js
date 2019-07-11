@@ -1,12 +1,10 @@
 import React from 'react';
-import UsersSelectionList from './components/users_selection_list'
-import CheckboxListSecondary from './components/checked_list'
-import TransferList from './components/transfer_list'
+import UserGroupDialog from './components/user_group_dialog'
 
 function App() {
   return (
     <div>
-      <TransferList />  
+      <UserGroupDialog />  
     </div>
   );
 }
