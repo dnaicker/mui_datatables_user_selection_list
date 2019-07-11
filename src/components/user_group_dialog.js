@@ -39,7 +39,7 @@ function SimpleDialog(props) {
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" {...other}>
       <DialogTitle id="simple-dialog-title">
-        <TextField placeholder={groupname} />
+      Group Name
       </DialogTitle>
       <UserGroupList />
     </Dialog>
