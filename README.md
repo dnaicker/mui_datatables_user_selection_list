@@ -1,5 +1,9 @@
 ### Description
-A sample project to test out mui-datatables for a practical application usage in creating a user selection checklist to add into group 
+User selection checklist to add users into a group
+
+Initially to try out mui-datatables but found it difficult to understand their docs. The sample apps are great but customising it was troublesome and slowed me down.
+
+I have revereted to material-ui transfer list sample to achieve the results desired
 
 ### Requirements 
 `https://yarnpkg.com/lang/en/docs/install/`
